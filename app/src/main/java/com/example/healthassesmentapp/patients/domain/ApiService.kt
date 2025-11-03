@@ -5,7 +5,9 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RegisterRequest(
     val firstname: String,
     val lastname: String,
@@ -14,7 +16,7 @@ data class RegisterRequest(
     val gender: String,
     val reg_date: String
 )
-
+@Serializable
 data class VitalsRequest(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val visit_date: String,
@@ -23,7 +25,7 @@ data class VitalsRequest(
     val bmi: Double,
 
     )
-
+@Serializable
 data class GeneralRequest(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val general_health: String?,

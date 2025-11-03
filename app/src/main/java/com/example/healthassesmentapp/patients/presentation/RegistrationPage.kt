@@ -132,8 +132,3 @@ fun RegistrationPage(
         }
     }
         }
-@Preview
-@Composable
-private fun RegistrationPagePreview() {
-    RegistrationPage(navController = rememberNavController())
-}

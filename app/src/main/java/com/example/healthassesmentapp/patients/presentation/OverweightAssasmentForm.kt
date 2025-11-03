@@ -30,7 +30,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.healthassesmentapp.patients.data.AssessmentEntity
 import com.example.healthassesmentapp.patients.data.PatientEntity
 import com.example.healthassesmentapp.patients.data.VitalsEntity
-import com.example.healthassesmentapp.patients.domain.ApiClient.apiService
 import com.example.healthassesmentapp.patients.navigation.Screens
 import com.example.healthassesmentapp.patients.presentation.components.Comments
 import com.example.healthassesmentapp.patients.presentation.components.CustomSmallButton
@@ -44,7 +43,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun OverWeightAssesmentPage(
     modifier: Modifier = Modifier,
-    navController: NavController,
+    navController: NavController = rememberNavController(),
     viewModel: PatientViewModel = hiltViewModel(),
     patientId: Long
 
@@ -176,5 +175,8 @@ fun OverWeightAssesmentPage(
 @Preview
 @Composable
 private fun OverWeightAssesmentPreview() {
-   //OverWeightAssesmentPage(navController = rememberNavController())
+
+   OverWeightAssesmentPage(
+       patientId = 2,
+   )
 }

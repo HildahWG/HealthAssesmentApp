@@ -2,10 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("kapt")
-    id("com.google.dagger.hilt.android")version "2.52"
-    //id("com.android.application") version "8.11.2" apply false
-    //id("org.jetbrains.kotlin.android") version "2.0.21" apply false
+    id("com.google.devtools.ksp")
+    id ("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization") version "1.9.0"
 
 
 }
@@ -53,15 +52,14 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
-    implementation("androidx.navigation:navigation-compose:2.8.3")
+    implementation("androidx.navigation:navigation-compose:2.9.5")
 
-
-    implementation ("com.google.dagger:hilt-android:2.52")
-        kapt ("com.google.dagger:hilt-compiler:2.52")
-
+    //classpath("com.google.dagger:hilt-android-gradle-plugin:2.52")
+    implementation ("com.google.dagger:hilt-android:2.57.1")
+    ksp ("com.google.dagger:hilt-compiler:2.57.1")
         // Room
         implementation ("androidx.room:room-runtime:2.6.1")
-        kapt ("androidx.room:room-compiler:2.6.1")
+        ksp ("androidx.room:room-compiler:2.6.1")
         implementation ("androidx.room:room-ktx:2.6.1")
 
         // Retrofit
@@ -70,11 +68,9 @@ dependencies {
 
         // Lifecycle ViewModel
         implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+        implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
-    implementation("com.squareup:javapoet:1.13.0")
-
-
+        implementation("com.squareup:javapoet:1.13.0")
 
 
     implementation(libs.androidx.ui.tooling.preview)
