@@ -32,10 +32,11 @@ import java.util.Locale
 @Composable
 fun DatePickerRow(
     text : String,
+    dateValue: String,
     modifier: Modifier = Modifier,
     onDateSelected: (String) -> Unit
 ) {
-    var selectedDate by remember { mutableStateOf("") }
+
     var showDatePicker by remember { mutableStateOf(false) }
 
     val dateFormatter = remember {
@@ -56,7 +57,7 @@ fun DatePickerRow(
         )
 
         OutlinedTextField(
-            value = selectedDate,
+            value = dateValue,
             onValueChange = {},
             readOnly = true,
 
@@ -78,7 +79,7 @@ fun DatePickerRow(
             LocalContext.current,
             { _, year, month, dayOfMonth ->
                 calendar.set(year, month, dayOfMonth)
-                selectedDate = dateFormatter.format(calendar.time)
+                val selectedDate = dateFormatter.format(calendar.time)
                 onDateSelected(selectedDate)
                 showDatePicker = false
             },

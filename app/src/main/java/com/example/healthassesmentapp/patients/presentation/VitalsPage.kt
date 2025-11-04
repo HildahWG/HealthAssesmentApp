@@ -33,6 +33,7 @@ fun VitalsPage(
     modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: PatientViewModel = hiltViewModel(),
+    //viewModel: PatientActions = hiltViewModel(),
     patientId: Long
 
     ) {
@@ -81,8 +82,8 @@ fun VitalsPage(
 
             DatePickerRow(
                 text = "Visit Date",
-                onDateSelected = { selected ->
-                    dov = selected }
+                dateValue = dov,
+                onDateSelected = { dov = it }
 
             )
 
@@ -130,8 +131,24 @@ fun VitalsPage(
         }
     }
 }
+/*
 @Preview
 @Composable
 private fun VitalsPagePreview() {
-    //VitalsPage(navController = rememberNavController())
-}
+    val navController = rememberNavController()
+
+    val fakeViewModel = object : PatientActions {
+        override fun saveRegistration(patient: com.example.healthassesmentapp.patients.data.PatientEntity, onSaved: (Long) -> Unit) {}
+        override fun setCurrentPatientId(id: Long) {}
+        override fun saveAssessment(assessment: com.example.healthassesmentapp.patients.data.AssessmentEntity, onComplete: (Long) -> Unit) {}
+        override fun saveVitals(vitals: VitalsEntity, onComplete: (Long) -> Unit) {
+            onComplete(0L) // preview does nothing
+        }
+    }
+
+    VitalsPage(
+        navController = navController,
+        viewModel = fakeViewModel,
+        patientId = 1
+    )
+}*/

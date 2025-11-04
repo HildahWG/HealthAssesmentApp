@@ -21,10 +21,10 @@ fun AppNavigation(navController: NavHostController) {
 
     NavHost(
         navController = navController,
-        startDestination = Screens.RegistrationScreen::class,
+        startDestination = Screens.RegistrationScreen.route,
     ) {
 
-        composable<Screens.RegistrationScreen> {
+        composable(Screens.RegistrationScreen.route) {
             RegistrationPage(navController = navController)
         }
         composable(

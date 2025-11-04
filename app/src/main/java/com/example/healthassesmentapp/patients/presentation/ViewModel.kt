@@ -22,18 +22,16 @@ import javax.inject.Inject
 open class PatientViewModel @Inject constructor(
     val repo: PatientRepository,
     private val apiService: ApiService
-) : ViewModel() {
-
+) : ViewModel(), PatientActions  {
 
     private val _currentPatientId = MutableStateFlow<Long?>(null)
     val currentPatientId = _currentPatientId.asStateFlow()
 
-    fun setCurrentPatientId(id: Long) {
+    override fun setCurrentPatientId(id: Long) {
         _currentPatientId.value = id
     }
 
-
-    fun saveRegistration(patient: PatientEntity, onComplete: (Long) -> Unit = {}) {
+    override fun saveRegistration(patient: PatientEntity, onComplete: (Long) -> Unit) {
         viewModelScope.launch {
             val id = repo.insertPatient(patient)
             _currentPatientId.value = id
@@ -45,14 +43,14 @@ open class PatientViewModel @Inject constructor(
     }
 
 
-    fun saveVitals(vitals: VitalsEntity, onComplete: (Long) -> Unit = {}) {
+    override fun saveVitals(vitals: VitalsEntity, onComplete: (Long) -> Unit) {
         viewModelScope.launch {
             val id = repo.insertVitals(vitals)
             onComplete(id)
         }
     }
 
-    fun saveAssessment(assessment: AssessmentEntity, onComplete: (Long) -> Unit = {}) {
+   override fun saveAssessment(assessment: AssessmentEntity, onComplete: (Long) -> Unit ) {
         viewModelScope.launch {
             val id = repo.insertAssessment(assessment)
             onComplete(id)

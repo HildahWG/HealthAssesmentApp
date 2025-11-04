@@ -22,6 +22,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.healthassesmentapp.patients.data.AssessmentEntity
+import com.example.healthassesmentapp.patients.data.PatientEntity
+import com.example.healthassesmentapp.patients.data.PatientRepository
+import com.example.healthassesmentapp.patients.data.VitalsEntity
+import com.example.healthassesmentapp.patients.domain.ApiService
 import com.example.healthassesmentapp.patients.navigation.Screens
 import com.example.healthassesmentapp.patients.presentation.components.Comments
 import com.example.healthassesmentapp.patients.presentation.components.CustomSmallButton
@@ -35,6 +39,7 @@ fun GeneralAssesmentPage(
     modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: PatientViewModel = hiltViewModel(),
+    //viewModel: PatientActions = hiltViewModel(),
     patientId: Long
 
     ) {
@@ -66,9 +71,10 @@ fun GeneralAssesmentPage(
             )
             DatePickerRow(
                 text = "Registration Date",
-                        onDateSelected = { selected ->
-                    regDate = selected
-                }
+                dateValue = regDate,
+                onDateSelected = { regDate = it }
+
+
             )
             QuestionWithCheckboxes(
                 question = "General Health?",
@@ -127,8 +133,27 @@ fun GeneralAssesmentPage(
         }
     }
 }
+/*
 @Preview
 @Composable
 private fun GeneralAssesmentPreview() {
-    //GeneralAssesmentPage(navController = rememberNavController())
-}
+
+    val navController = rememberNavController()
+
+    // Fake ViewModel for preview
+    val fakeViewModel = object : PatientActions {
+        override fun saveRegistration(patient: PatientEntity, onSaved: (Long) -> Unit) {}
+        override fun setCurrentPatientId(id: Long) {}
+        override fun saveAssessment(assessment: AssessmentEntity, onComplete: (Long) -> Unit) {
+            onComplete(0L) // preview does nothing
+        }
+        override fun saveVitals(vitals: VitalsEntity, onComplete: (Long) -> Unit) {
+            onComplete(0L) // preview does nothing
+        }
+    }
+
+    GeneralAssesmentPage(
+        navController = navController,
+        viewModel = fakeViewModel,
+        patientId = 12
+    )}*/

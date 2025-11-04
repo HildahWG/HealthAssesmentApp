@@ -29,7 +29,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.healthassesmentapp.patients.data.AssessmentEntity
 import com.example.healthassesmentapp.patients.data.PatientEntity
+import com.example.healthassesmentapp.patients.data.PatientRepository
 import com.example.healthassesmentapp.patients.data.VitalsEntity
+import com.example.healthassesmentapp.patients.domain.ApiService
 import com.example.healthassesmentapp.patients.navigation.Screens
 import com.example.healthassesmentapp.patients.presentation.components.Comments
 import com.example.healthassesmentapp.patients.presentation.components.CustomSmallButton
@@ -44,8 +46,8 @@ import kotlinx.coroutines.launch
 fun OverWeightAssesmentPage(
     modifier: Modifier = Modifier,
     navController: NavController = rememberNavController(),
+    patientId: Long,
     viewModel: PatientViewModel = hiltViewModel(),
-    patientId: Long
 
     ) {
     Scaffold(
@@ -78,8 +80,8 @@ fun OverWeightAssesmentPage(
             )
             DatePickerRow(
                 text = "Registration Date",
-                        onDateSelected = { selected ->
-                    regDate = selected}
+                dateValue = regDate,
+                onDateSelected = { regDate = it }
             )
 
             QuestionWithCheckboxes(
@@ -171,12 +173,4 @@ fun OverWeightAssesmentPage(
 
         }
     }
-}
-@Preview
-@Composable
-private fun OverWeightAssesmentPreview() {
-
-   OverWeightAssesmentPage(
-       patientId = 2,
-   )
 }

@@ -22,7 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.healthassesmentapp.patients.data.AssessmentEntity
 import com.example.healthassesmentapp.patients.data.PatientEntity
+import com.example.healthassesmentapp.patients.data.PatientRepository
+import com.example.healthassesmentapp.patients.data.VitalsEntity
+import com.example.healthassesmentapp.patients.domain.ApiService
 import com.example.healthassesmentapp.patients.navigation.Screens
 import com.example.healthassesmentapp.patients.presentation.components.CustomSmallButton
 import com.example.healthassesmentapp.patients.presentation.components.DatePickerRow
@@ -35,8 +39,9 @@ fun RegistrationPage(
     modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: PatientViewModel = hiltViewModel()
-
+    //viewModel: PatientActions = hiltViewModel()
 ) {
+
     Scaffold(
         modifier =
             modifier.fillMaxWidth(),
@@ -77,13 +82,14 @@ fun RegistrationPage(
             )
             DatePickerRow(
                 text = "Registration Date",
-                onDateSelected = { selected ->
-                    regDate = selected}
+                dateValue = regDate,
+                onDateSelected = { regDate = it }
+
             )
             DatePickerRow(
                 text = "DOB",
-                        onDateSelected = { selected ->
-                    dob = selected }
+                dateValue = dob,
+                onDateSelected = { dob = it }
             )
             GenderInputField()
             Spacer(modifier = Modifier.weight(1f))
@@ -117,10 +123,15 @@ fun RegistrationPage(
                         )
 
 
-                        viewModel.saveRegistration(patient) { insertedId ->
+                        /*viewModel.saveRegistration(patient) { insertedId ->
                             viewModel.setCurrentPatientId(insertedId)
                             println(" Saved locally with ID: $insertedId")
+                            navController.navigate(Screens.VitalsScreen.withArgs(insertedId))*/
+                        viewModel.saveRegistration(patient) { insertedId ->
+                            viewModel.setCurrentPatientId(insertedId)
+                            println("Saved locally with ID: $insertedId")
                             navController.navigate(Screens.VitalsScreen.withArgs(insertedId))
+
                         }
                     },
                     modifier = Modifier.weight(1f)
@@ -131,4 +142,33 @@ fun RegistrationPage(
 
         }
     }
+}
+/*
+@Preview
+@Composable
+fun RegistrationPagePreview() {
+    val navController = rememberNavController()
+
+    val fakeViewModel = object : PatientActions {
+        override fun saveRegistration(patient: PatientEntity, onSaved: (Long) -> Unit) {
+            onSaved(0L) // do nothing
         }
+
+        override fun setCurrentPatientId(id: Long) {
+            // do nothing
+        }
+
+        override fun saveAssessment(assessment: AssessmentEntity, onComplete: (Long) -> Unit) {
+            onComplete(0L) // do nothing
+        }
+
+        override fun saveVitals(vitals: VitalsEntity, onComplete: (Long) -> Unit) {
+            onComplete(0L) // do nothing
+        }
+    }
+
+    RegistrationPage(
+        navController = navController,
+        viewModel = fakeViewModel
+    )
+}*/
